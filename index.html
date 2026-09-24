@@ -82,14 +82,14 @@ em{font-style:italic}
 .fin-cta-secondary:hover{background-size:100% 1px;color:var(--lime)}
 
 /* hero */
-#fin-intro .fin-hero{max-width:none;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(64px,11vh,120px);overflow:hidden}
+#fin-intro .fin-hero{max-width:none;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(64px,11vh,120px);overflow:hidden}
 .fin-light{position:absolute;inset:0;pointer-events:none;transition:transform .5s var(--ease)}
 .fin-bloom{position:absolute;left:-10%;right:-10%;top:36%;height:70vh;transform:translateY(-50%);background:radial-gradient(ellipse 48% 20% at 50% 50%,rgba(168,224,56,.2),transparent 72%)}
 .fin-streak{position:absolute;left:0;right:0;top:36%;height:1px;background:linear-gradient(90deg,transparent,rgba(168,224,56,.5) 20%,#e6ffb0 50%,rgba(168,224,56,.5) 80%,transparent);box-shadow:0 0 26px 3px rgba(168,224,56,.4);transform:scaleX(0);opacity:0;transition:transform 2.2s var(--ease) .6s,opacity 1.2s ease .6s}
 .fin-hero.fin-in .fin-streak{transform:none;opacity:1}
 .fin-tc{position:absolute;top:calc(max(16px,env(safe-area-inset-top)) + 72px);left:var(--pad);right:var(--pad);display:flex;justify-content:space-between;font:400 10px var(--mono);letter-spacing:.26em;color:var(--dim)}
 .fin-hero-inner{position:relative;width:100%;max-width:1500px;margin:0 auto}
-.fin-title{font:500 clamp(58px,17vw,290px)/.88 var(--serif);letter-spacing:-.035em;overflow:hidden;padding:0 .06em .1em 0;margin-left:-.03em}
+.fin-title{font:500 clamp(38px,17vw,290px)/.88 var(--serif);letter-spacing:-.035em;overflow:hidden;padding:0 .06em .1em 0;margin-left:-.03em}
 .fin-title .l{display:inline-block;transform:translateY(108%);transition:transform 1.4s var(--ease) calc(.5s + var(--i)*.075s)}
 .fin-title .it{font-style:italic;color:var(--lime)}
 .fin-hero.fin-in .fin-title .l{transform:none}
@@ -110,7 +110,7 @@ em{font-style:italic}
 .fin-label{display:block;font:400 10.5px var(--mono);letter-spacing:.3em;text-transform:uppercase;color:var(--lime);margin-bottom:26px}
 
 /* chapter I */
-.fin-idea{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
+.fin-idea{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center}
 .fin-idea p{font:500 clamp(36px,8vw,128px)/1.02 var(--serif);letter-spacing:-.025em;max-width:16ch}
 .fin-idea p+p{margin-top:.35em;font-style:italic;font-weight:400;font-size:clamp(28px,5.2vw,80px);max-width:22ch;color:var(--ink)}
 .fin-idea .w{opacity:.13}
