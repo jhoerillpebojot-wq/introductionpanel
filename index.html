@@ -83,13 +83,13 @@ em{font-style:italic}
 
 /* hero */
 #fin-intro .fin-hero{max-width:none;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:clamp(64px,11vh,120px);overflow:hidden}
-.fin-light{position:absolute;inset:0;pointer-events:none;transition:transform .5s var(--ease)}
-.fin-bloom{position:absolute;left:-10%;right:-10%;top:36%;height:70vh;transform:translateY(-50%);background:radial-gradient(ellipse 48% 20% at 50% 50%,rgba(168,224,56,.2),transparent 72%)}
-.fin-streak{position:absolute;left:0;right:0;top:36%;height:1px;background:linear-gradient(90deg,transparent,rgba(168,224,56,.5) 20%,#e6ffb0 50%,rgba(168,224,56,.5) 80%,transparent);box-shadow:0 0 26px 3px rgba(168,224,56,.4);transform:scaleX(0);opacity:0;transition:transform 2.2s var(--ease) .6s,opacity 1.2s ease .6s}
+.fin-light{position:absolute;z-index:0;left:calc(50% - 50vw);width:100vw;top:0;height:0;pointer-events:none;transition:transform .5s var(--ease)}
+.fin-bloom{position:absolute;left:0;right:0;top:0;height:50vh;transform:translateY(-50%);background:radial-gradient(ellipse 48% 20% at 50% 50%,rgba(168,224,56,.2),transparent 72%)}
+.fin-streak{position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(168,224,56,.5) 20%,#e6ffb0 50%,rgba(168,224,56,.5) 80%,transparent);box-shadow:0 0 26px 3px rgba(168,224,56,.4);transform:scaleX(0);opacity:0;transition:transform 2.2s var(--ease) .6s,opacity 1.2s ease .6s}
 .fin-hero.fin-in .fin-streak{transform:none;opacity:1}
 .fin-tc{position:absolute;top:calc(max(16px,env(safe-area-inset-top)) + 72px);left:var(--pad);right:var(--pad);display:flex;justify-content:space-between;font:400 10px var(--mono);letter-spacing:.26em;color:var(--dim)}
 .fin-hero-inner{position:relative;width:100%;max-width:1500px;margin:0 auto}
-.fin-title{font:500 clamp(38px,17vw,290px)/.88 var(--serif);letter-spacing:-.035em;overflow:hidden;padding:0 .06em .1em 0;margin-left:-.03em}
+.fin-title{position:relative;z-index:1;font:600 clamp(38px,17vw,290px)/.95 var(--serif);letter-spacing:-.03em;overflow:hidden;padding:.12em .08em .12em 0;margin:-.12em 0 0 -.03em}
 .fin-title .l{display:inline-block;transform:translateY(108%);transition:transform 1.4s var(--ease) calc(.5s + var(--i)*.075s)}
 .fin-title .it{font-style:italic;color:var(--lime)}
 .fin-hero.fin-in .fin-title .l{transform:none}
@@ -182,6 +182,7 @@ em{font-style:italic}
   .fin-scroll-indicator{display:none}
 }
 @media(min-width:2000px){body{font-size:18px}.fin-desc,.fin-final p:not(.fin-credit){font-size:20px}}
+#fin-intro .fin-title,#fin-intro .fin-idea p,#fin-intro .fin-features h2,#fin-intro .fin-row h3,#fin-intro .fin-statement h2,#fin-intro .fin-statement p,#fin-intro .fin-final h2,#fin-intro .fin-mock-value,#fin-intro .fin-tagline{font-optical-sizing:none;font-variation-settings:'opsz' 28}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;transition-delay:0s!important;animation:none!important}
   .fin-reveal,.fin-up,.fin-title .l{opacity:1!important;transform:none!important;filter:none!important}
@@ -231,9 +232,9 @@ em{font-style:italic}
   </nav>
 
   <section class="fin-hero" id="fin-hero">
-    <div class="fin-light" id="finLight" aria-hidden="true"><div class="fin-bloom"></div><div class="fin-streak"></div></div>
     <div class="fin-tc fin-up" aria-hidden="true" style="--d:1.2s"><span>REEL 01 — SCENE 01</span><span id="finTc">00:00:00:00</span></div>
     <div class="fin-hero-inner">
+      <div class="fin-light" id="finLight" aria-hidden="true"><div class="fin-bloom"></div><div class="fin-streak"></div></div>
       <h1 class="fin-title" id="finTitle" aria-label="FINUITY"><span class="l" style="--i:0" aria-hidden="true">F</span><span class="l" style="--i:1" aria-hidden="true">I</span><span class="l" style="--i:2" aria-hidden="true">N</span><span class="l it" style="--i:3" aria-hidden="true">U</span><span class="l it" style="--i:4" aria-hidden="true">I</span><span class="l it" style="--i:5" aria-hidden="true">T</span><span class="l it" style="--i:6" aria-hidden="true">Y</span></h1>
       <div class="fin-hero-row">
         <div class="fin-hero-copy">
@@ -382,6 +383,7 @@ var FINUITY_APP_URL = 'https://llapasaranprincehilary-hash.github.io/MONEY/';
       if(progressBar) progressBar.style.width = (max > 0 ? intro.scrollTop / max * 100 : 0) + '%';
       if(nav) nav.classList.toggle('fin-scrolled', intro.scrollTop > 40);
       updateWords();
+      if(frameEl && frameEl.getBoundingClientRect().top < intro.clientHeight * 0.9) showFrame();
       ticking = false;
     });
   }
@@ -404,13 +406,15 @@ var FINUITY_APP_URL = 'https://llapasaranprincehilary-hash.github.io/MONEY/';
   }
 
   /* Reveal-on-scroll */
-  var targets = intro.querySelectorAll('.fin-reveal, .fin-frame');
+  var frameEl = document.getElementById('finMockup');
+  function showFrame(){ if(frameEl && !frameEl.classList.contains('fin-in')){ frameEl.classList.add('fin-in'); countUp(); } }
+  var targets = intro.querySelectorAll('.fin-reveal, .fin-showcase');
   if('IntersectionObserver' in window && targets.length){
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(entry.isIntersecting){
           entry.target.classList.add('fin-in');
-          if(entry.target.id === 'finMockup') countUp();
+          if(entry.target.classList.contains('fin-showcase')) showFrame();
           io.unobserve(entry.target);
         }
       });
@@ -418,6 +422,7 @@ var FINUITY_APP_URL = 'https://llapasaranprincehilary-hash.github.io/MONEY/';
     targets.forEach(function(el){ io.observe(el); });
   } else {
     targets.forEach(function(el){ el.classList.add('fin-in'); });
+    showFrame();
   }
 
   /* Mouse parallax: the light streak drifts with the cursor (desktop only) */
@@ -431,7 +436,7 @@ var FINUITY_APP_URL = 'https://llapasaranprincehilary-hash.github.io/MONEY/';
       ty = (e.clientY - r.top) / r.height - 0.5;
       if(!raf){
         raf = requestAnimationFrame(function(){
-          light.style.transform = 'translateY(' + (ty * 46) + 'px)';
+          light.style.transform = 'translateY(' + (ty * 10) + 'px)';
           if(logo) logo.style.transform = 'translate(' + (tx * 8) + 'px,' + (ty * 8) + 'px)';
           raf = null;
         });
